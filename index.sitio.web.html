@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GuíaCibersegura.net - Aprende Ciberseguridad</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #000000 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid #0f4c75;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #3bb5ff;
+            text-decoration: none;
+            text-shadow: 0 0 10px rgba(59, 181, 255, 0.5);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #3bb5ff;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            padding: 4rem 0;
+            text-align: center;
+            background: radial-gradient(circle, rgba(59, 181, 255, 0.1) 0%, transparent 70%);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #3bb5ff, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #b8b8b8;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #0f4c75, #3bb5ff);
+            color: white;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(59, 181, 255, 0.3);
+        }
+
+        /* Modules Grid */
+        .modules-section {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #3bb5ff;
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .module-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 181, 255, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(59, 181, 255, 0.2);
+            border-color: #3bb5ff;
+        }
+
+        .module-card h3 {
+            color: #3bb5ff;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .module-card p {
+            color: #b8b8b8;
+            margin-bottom: 1rem;
+        }
+
+        .difficulty {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .beginner {
+            background: rgba(46, 204, 113, 0.2);
+            color: #2ecc71;
+            border: 1px solid #2ecc71;
+        }
+
+        .intermediate {
+            background: rgba(241, 196, 15, 0.2);
+            color: #f1c40f;
+            border: 1px solid #f1c40f;
+        }
+
+        .advanced {
+            background: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+            border: 1px solid #e74c3c;
+        }
+
+        .topics-list {
+            list-style: none;
+            color: #b8b8b8;
+        }
+
+        .topics-list li {
+            padding: 0.3rem 0;
+            border-left: 2px solid #3bb5ff;
+            padding-left: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border: 1px solid #3bb5ff;
+            border-radius: 15px;
+            padding: 2rem;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .close {
+            float: right;
+            font-size: 2rem;
+            color: #3bb5ff;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .close:hover {
+            color: #ffffff;
+        }
+
+        /* Beginner Path */
+        .beginner-path {
+            background: rgba(46, 204, 113, 0.1);
+            border: 2px solid #2ecc71;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .beginner-path h3 {
+            color: #2ecc71;
+            margin-bottom: 1rem;
+        }
+
+        .path-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .step {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 10px;
+            border-left: 4px solid #2ecc71;
+        }
+
+        .step h4 {
+            color: #3bb5ff;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.9);
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+            border-top: 1px solid #0f4c75;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                width: 90%;
+                max-height: 90vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">🛡️ GuíaCibersegura.net</a>
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#modulos">Módulos</a></li>
+                <li><a href="#principiantes">Principiantes</a></li>
+                <li><a href="#recursos">Recursos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" id="inicio">
+            <div class="container">
+                <h1>Aprende Ciberseguridad desde Cero</h1>
+                <p>Conviértete en un experto en seguridad digital con nuestros módulos interactivos y contenido actualizado</p>
+                <a href="#principiantes" class="cta-button">Comenzar Ahora</a>
+            </div>
+        </section>
+
+        <section class="modules-section" id="modulos">
+            <div class="container">
+                <h2 class="section-title">Módulos de Aprendizaje</h2>
+                
+                <div class="modules-grid">
+                    <div class="module-card" onclick="openModal('fundamentos')">
+                        <span class="difficulty beginner">Principiante</span>
+                        <h3>🔰 Fundamentos de Ciberseguridad</h3>
+                        <p>Conceptos básicos y principios fundamentales de la seguridad informática</p>
+                        <ul class="topics-list">
+                            <li>¿Qué es la Ciberseguridad?</li>
+                            <li>Principios CIA (Confidencialidad, Integridad, Disponibilidad)</li>
+                            <li>Tipos de amenazas comunes</li>
+                            <li>Glosario de términos</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card" onclick="openModal('usuarios')">
+                        <span class="difficulty beginner">Principiante</span>
+                        <h3>🏠 Seguridad para Usuarios y Hogares</h3>
+                        <p>Protege tu información personal y dispositivos domésticos</p>
+                        <ul class="topics-list">
+                            <li>Gestión de contraseñas seguras</li>
+                            <li>Navegación segura en internet</li>
+                            <li>Protección de correo electrónico</li>
+                            <li>Seguridad en redes Wi-Fi</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card" onclick="openModal('empresas')">
+                        <span class="difficulty intermediate">Intermedio</span>
+                        <h3>🏢 Ciberseguridad Empresarial</h3>
+                        <p>Estrategias y políticas de seguridad para organizaciones</p>
+                        <ul class="topics-list">
+                            <li>Evaluación de riesgos</li>
+                            <li>Políticas de seguridad</li>
+                            <li>Capacitación de empleados</li>
+                            <li>Respuesta a incidentes</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card" onclick="openModal('hacking')">
+                        <span class="difficulty advanced">Avanzado</span>
+                        <h3>🔍 Hacking Ético y Pentesting</h3>
+                        <p>Técnicas de pentesting y hacking ético para profesionales</p>
+                        <ul class="topics-list">
+                            <li>Introducción al hacking ético</li>
+                            <li>Herramientas de pentesting</li>
+                            <li>Vulnerabilidades web comunes</li>
+                            <li>Análisis de vulnerabilidades</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card" onclick="openModal('privacidad')">
+                        <span class="difficulty intermediate">Intermedio</span>
+                        <h3>🔐 Privacidad y Protección de Datos</h3>
+                        <p>Protege tu privacidad digital y comprende las leyes de datos</p>
+                        <ul class="topics-list">
+                            <li>Conceptos de privacidad</li>
+                            <li>Leyes de protección de datos (GDPR)</li>
+                            <li>Herramientas de privacidad</li>
+                            <li>Gestión de huella digital</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card" onclick="openModal('carreras')">
+                        <span class="difficulty beginner">Principiante</span>
+                        <h3>💼 Carreras en Ciberseguridad</h3>
+                        <p>Descubre las oportunidades profesionales en el campo</p>
+                        <ul class="topics-list">
+                            <li>Roles y especializaciones</li>
+                            <li>Habilidades requeridas</li>
+                            <li>Certificaciones populares</li>
+                            <li>Consejos para encontrar empleo</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="beginner-path" id="principiantes">
+                    <h3>🎯 Ruta de Aprendizaje para Principiantes</h3>
+                    <p>Sigue este camino estructurado para dominar la ciberseguridad paso a paso</p>
+                    
+                    <div class="path-steps">
+                        <div class="step">
+                            <h4>Paso 1: Fundamentos</h4>
+                            <p>Aprende los conceptos básicos de ciberseguridad, terminología y principios fundamentales.</p>
+                        </div>
+                        <div class="step">
+                            <h4>Paso 2: Seguridad Personal</h4>
+                            <p>Protege tus dispositivos personales y aprende buenas prácticas de seguridad.</p>
+                        </div>
+                        <div class="step">
+                            <h4>Paso 3: Redes y Sistemas</h4>
+                            <p>Comprende cómo funcionan las redes y los sistemas operativos desde una perspectiva de seguridad.</p>
+                        </div>
+                        <div class="step">
+                            <h4>Paso 4: Herramientas Básicas</h4>
+                            <p>Familiarízate con herramientas esenciales de seguridad y monitoreo.</p>
+                        </div>
+                        <div class="step">
+                            <h4>Paso 5: Práctica Hands-on</h4>
+                            <p>Realiza ejercicios prácticos y participa en CTFs para aplicar conocimientos.</p>
+                        </div>
+                        <div class="step">
+                            <h4>Paso 6: Especialización</h4>
+                            <p>Elige un área específica y profundiza en certificaciones profesionales.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 GuíaCibersegura.net - Todos los derechos reservados.</p>
+            <p>Creado por <strong>IVANGELO RDO</strong> | Aprende, practica y protege el mundo digital</p>
+            <p style="color: #3bb5ff; font-weight: bold; margin-top: 1rem;">📱 Contacto: +595 0981051499</p>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <div id="fundamentos" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>🔰 Fundamentos de Ciberseguridad</h2>
+            <h3>¿Qué es la Ciberseguridad?</h3>
+            <p>La ciberseguridad es la práctica de proteger sistemas, redes y programas de ataques digitales. Estos ataques suelen tener como objetivo acceder, cambiar o destruir información confidencial, extorsionar a los usuarios o interrumpir los procesos comerciales normales.</p>
+            
+            <h3>Principios de la Seguridad (CIA Triad)</h3>
+            <ul>
+                <li><strong>Confidencialidad:</strong> Asegurar que la información sea accesible solo para aquellos autorizados a tener acceso.</li>
+                <li><strong>Integridad:</strong> Salvaguardar la precisión y completitud de la información y los métodos de procesamiento.</li>
+                <li><strong>Disponibilidad:</strong> Asegurar que los usuarios autorizados tengan acceso a la información cuando la necesiten.</li>
+            </ul>
+            
+            <h3>Tipos de Amenazas Comunes</h3>
+            <ul>
+                <li><strong>Malware:</strong> Software malicioso que incluye virus, gusanos, troyanos y ransomware.</li>
+                <li><strong>Phishing:</strong> Intentos de obtener información confidencial haciéndose pasar por una entidad confiable.</li>
+                <li><strong>Ataques DDoS:</strong> Intentos de hacer que un recurso de red no esté disponible para sus usuarios.</li>
+                <li><strong>Ingeniería Social:</strong> Manipulación psicológica de personas para realizar acciones o divulgar información.</li>
+            </ul>
+            
+            <h3>Historia y Evolución</h3>
+            <p>La ciberseguridad ha evolucionado desde simples contraseñas en los años 60 hasta sistemas complejos de inteligencia artificial. Los principales hitos incluyen la creación de los primeros antivirus, el desarrollo de firewalls y la implementación de criptografía moderna.</p>
+        </div>
+    </div>
+
+    <div id="usuarios" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>🏠 Seguridad para Usuarios y Hogares</h2>
+            
+            <h3>Gestión de Contraseñas Seguras</h3>
+            <p>Una contraseña fuerte debe tener al menos 12 caracteres, incluir mayúsculas, minúsculas, números y símbolos. Nunca reutilices contraseñas importantes.</p>
+            <ul>
+                <li>Usa un gestor de contraseñas como Bitwarden o 1Password</li>
+                <li>Habilita la autenticación de dos factores (2FA) siempre que sea posible</li>
+                <li>Cambia contraseñas comprometidas inmediatamente</li>
+            </ul>
+            
+            <h3>Navegación Segura</h3>
+            <ul>
+                <li>Verifica que los sitios web usen HTTPS (candado verde)</li>
+                <li>Evita hacer clic en enlaces sospechosos o ventanas emergentes</li>
+                <li>Mantén tu navegador actualizado</li>
+                <li>Usa bloqueadores de anuncios y scripts maliciosos</li>
+            </ul>
+            
+            <h3>Protección de Correo Electrónico</h3>
+            <ul>
+                <li>Sé escéptico con emails no solicitados</li>
+                <li>Verifica la identidad del remitente antes de hacer clic en enlaces</li>
+                <li>No descargues archivos adjuntos de fuentes desconocidas</li>
+                <li>Usa filtros de spam y antivirus</li>
+            </ul>
+            
+            <h3>Seguridad de Redes Wi-Fi</h3>
+            <ul>
+                <li>Usa WPA3 o WPA2 para cifrar tu red</li>
+                <li>Cambia la contraseña predeterminada del router</li>
+                <li>Oculta el nombre de tu red (SSID) si es necesario</li>
+                <li>Evita conectarte a redes Wi-Fi públicas para actividades sensibles</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="empresas" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>🏢 Ciberseguridad Empresarial</h2>
+            
+            <h3>Evaluación de Riesgos Cibernéticos</h3>
+            <p>Proceso sistemático para identificar, analizar y evaluar los riesgos de seguridad que enfrenta una organización.</p>
+            <ul>
+                <li>Identificación de activos críticos</li>
+                <li>Análisis de vulnerabilidades</li>
+                <li>Evaluación de amenazas</li>
+                <li>Cálculo del impacto potencial</li>
+            </ul>
+            
+            <h3>Políticas de Seguridad</h3>
+            <ul>
+                <li>Política de contraseñas y acceso</li>
+                <li>Política de uso aceptable de TI</li>
+                <li>Política de respuesta a incidentes</li>
+                <li>Política de clasificación de datos</li>
+            </ul>
+            
+            <h3>Capacitación de Empleados</h3>
+            <ul>
+                <li>Programas de concienciación regular</li>
+                <li>Simulacros de phishing</li>
+                <li>Entrenamiento en mejores prácticas</li>
+                <li>Evaluación continua del conocimiento</li>
+            </ul>
+            
+            <h3>Respuesta a Incidentes</h3>
+            <ol>
+                <li><strong>Preparación:</strong> Establecer un equipo y procedimientos</li>
+                <li><strong>Identificación:</strong> Detectar y validar el incidente</li>
+                <li><strong>Contención:</strong> Limitar el alcance del daño</li>
+                <li><strong>Erradicación:</strong> Eliminar la causa del incidente</li>
+                <li><strong>Recuperación:</strong> Restaurar operaciones normales</li>
+                <li><strong>Lecciones Aprendidas:</strong> Mejorar procesos futuros</li>
+            </ol>
+        </div>
+    </div>
+
+    <div id="hacking" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>🔍 Hacking Ético y Pentesting</h2>
+            
+            <h3>¿Qué es el Hacking Ético?</h3>
+            <p>El hacking ético es la práctica de comprometer sistemas de manera legal y autorizada para encontrar vulnerabilidades antes que los atacantes maliciosos.</p>
+            
+            <h3>Herramientas Comunes de Pentesting</h3>
+            <ul>
+                <li><strong>Nmap:</strong> Escaneo de puertos y descubrimiento de servicios</li>
+                <li><strong>Metasploit:</strong> Framework para pruebas de penetración</li>
+                <li><strong>Wireshark:</strong> Analizador de protocolos de red</li>
+                <li><strong>Burp Suite:</strong> Pruebas de seguridad en aplicaciones web</li>
+                <li><strong>OWASP ZAP:</strong> Herramienta de seguridad para aplicaciones web</li>
+            </ul>
+            
+            <h3>Vulnerabilidades Web Comunes (OWASP Top 10)</h3>
+            <ul>
+                <li>Inyección SQL</li>
+                <li>Cross-Site Scripting (XSS)</li>
+                <li>Exposición de datos sensibles</li>
+                <li>Fallas de autenticación</li>
+                <li>Configuraciones de seguridad incorrectas</li>
+            </ul>
+            
+            <h3>Metodología de Pentesting</h3>
+            <ol>
+                <li><strong>Reconocimiento:</strong> Recopilación de información</li>
+                <li><strong>Escaneo:</strong> Identificación de servicios activos</li>
+                <li><strong>Enumeración:</strong> Obtención de información detallada</li>
+                <li><strong>Explotación:</strong> Aprovechamiento de vulnerabilidades</li>
+                <li><strong>Post-explotación:</strong> Mantener acceso y pivotear</li>
+                <li><strong>Reporte:</strong> Documentar hallazgos y recomendaciones</li>
+            </ol>
+        </div>
+    </div>
+
+    <div id="privacidad" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>🔐 Privacidad y Protección de Datos</h2>
+            
+            <h3>Conceptos de Privacidad</h3>
+            <p>La privacidad se refiere al control que tienes sobre tu información personal y cómo se recopila, usa y comparte.</p>
+            
+            <h3>Leyes de Protección de Datos</h3>
+            <ul>
+                <li><strong>GDPR (Europa):</strong> Reglamento General de Protección de Datos</li>
+                <li><strong>CCPA (California):</strong> Ley de Privacidad del Consumidor</li>
+                <li><strong>PIPEDA (Canadá):</strong> Ley de Protección de Información Personal</li>
+                <li><strong>LGPD (Brasil):</strong> Ley General de Protección de Datos</li>
+            </ul>
+            
+            <h3>Herramientas para la Privacidad</h3>
+            <ul>
+                <li><strong>VPNs:</strong> Ocultan tu dirección IP y cifran el tráfico</li>
+                <li><strong>Navegadores privados:</strong> Tor, Firefox con configuración estricta</li>
+                <li><strong>Motores de búsqueda:</strong> DuckDuckGo, Startpage</li>
+                <li><strong>Mensajería segura:</strong> Signal, Wire</li>
+            </ul>
+            
+            <h3>Gestión de la Huella Digital</h3>
+            <ul>
+                <li>Revisa y ajusta configuraciones de privacidad en redes sociales</li>
+                <li>Limita la información personal que compartes en línea</li>
+                <li>Usa nombres de usuario únicos y no relacionados</li>
+                <li>Monitorea tu presencia en línea regularmente</li>
+            </ul>
+            
+            <h3>Técnicas de Anonimato</h3>
+            <ul>
+                <li>Uso de la red Tor para navegación anónima</li>
+                <li>Correos electrónicos temporales</li>
+                <li>Pagos con criptomonedas enfocadas en privacidad</li>
+                <li>Uso de sistemas operativos enfocados en privacidad (Tails)</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="carreras" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>💼 Carreras en Ciberseguridad</h2>
+            
+            <h3>Roles y Especializaciones</h3>
+            <ul>
+                <li><strong>Analista de Seguridad:</strong> Monitorea y analiza amenazas de seguridad</li>
+                <li><strong>Ingeniero de Seguridad:</strong> Diseña e implementa soluciones de seguridad</li>
+                <li><strong>Pentester:</strong> Realiza pruebas de penetración autorizadas</li>
+                <li><strong>Arquitecto de Seguridad:</strong> Diseña la arquitectura de seguridad empresarial</li>
+                <li><strong>Forense Digital:</strong> Investiga incidentes de seguridad</li>
+                <li><strong>CISO:</strong> Ejecutivo responsable de la estrategia de seguridad</li>
+            </ul>
+            
+            <h3>Habilidades Técnicas Requeridas</h3>
+            <ul>
+                <li>Conocimiento de redes y protocolos</li>
+                <li>Sistemas operativos (Windows, Linux, macOS)</li>
+                <li>Programación (Python, JavaScript, PowerShell)</li>
+                <li>Herramientas de seguridad especializadas</li>
+                <li>Criptografía y PKI</li>
+            </ul>
+            
+            <h3>Habilidades Blandas</h3>
+            <ul>
+                <li>Comunicación efectiva</li>
+                <li>Resolución de problemas</li>
+                <li>Pensamiento crítico</li>
+                <li>Trabajo en equipo</li>
+                <li>Adaptabilidad</li>
+            </ul>
+            
+            <h3>Certificaciones Populares</h3>
+            <ul>
+                <li><strong>CompTIA Security+:</strong> Certificación de nivel de entrada</li>
+                <li><strong>CEH:</strong> Certified Ethical Hacker</li>
+                <li><strong
